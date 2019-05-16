@@ -22,6 +22,7 @@
 6 pulling remote change to local 
 
    git pull origin master   ....... pulling any change from remote  to local machine 
+It is good testing
 
 
 
