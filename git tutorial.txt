@@ -1,0 +1,30 @@
+
+ Git Tutorial 
+
+1.  Create repository 
+   -  on local computer 
+      -  create new folder -> open folder -> right click and open git bash
+2 initialize repository 
+    git init
+
+3  check status of repository
+    git status 
+
+4   add new file  and commit  on local repository 
+    git add .   ----- adding file on stage
+    git commit -m " comment"    --- committing a change.
+
+5 pushing a change to  remote repository 
+
+   git remote add origin "remote repository url "  
+   git push -u origin master  ---- for pushing local change to remote .
+
+6 pulling remote change to local 
+
+   git pull origin master   ....... pulling any change from remote  to local machine 
+
+
+
+
+ 
+      
