@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:context="http://www.springframework.org/schema/context" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <flow name="demo-munit2Flow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/mutest" doc:name="HTTP"/>
+        <set-payload value="#[message.inboundProperties.'http.query.params'.[decisionKey]]" doc:name="Set Payload"/>
+        <flow-ref name="decision-flow" doc:name="decision-flow"/>
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.decisionVariable.equals('decision')]">
+                <set-payload value="#['Decision one is taken']" doc:name="Set Payload"/>
+            </when>
+            <otherwise>
+                <set-payload value="#['Decision two is taken']" doc:name="Set Payload"/>
+            </otherwise>
+        </choice>
+    </flow>
+    <sub-flow name="decision-flow">
+        <choice doc:name="Choice">
+            <when expression="#['Value1'.equals(payload)]">
+                <flow-ref name="Decision1Sub_Flow" doc:name="Decision1Sub_Flow"/>
+            </when>
+            <otherwise>
+                <flow-ref name="DecisionSub_Flow2" doc:name="DecisionSub_Flow2"/>
+            </otherwise>
+        </choice>
+    </sub-flow>
+    <sub-flow name="Decision1Sub_Flow">
+        <set-variable variableName="decisionVariable" value="#['decision1']" doc:name="Decision1Variable1"/>
+    </sub-flow>
+    <sub-flow name="DecisionSub_Flow2">
+        <set-variable variableName="decisionVariable" value="#['decision2']" doc:name="decision2Variable2"/>
+    </sub-flow>
+</mule>
