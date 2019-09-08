@@ -24,7 +24,7 @@
    git pull origin master   ....... pulling any change from remote  to local machine 
 It is good testing
 
-7. using sourcetree  to manage Github project 
+7. using sourcetree  to manage Github project  to thomas
 
 
 
